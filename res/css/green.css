@@ -29,11 +29,28 @@ input, textarea {
 form {
 	width: 50%;
 	margin: auto;
+	margin-bottom: 100px;
 }
 
-button {
+.button {
 	color: #466;
 	background-color: #ddd;
+	border: 3px solid #101610;
+}
+
+.button:hover {
+	color: #466;
+	background-color: #fff;
+	border: 3px solid #669;
+}
+
+.contact {
+	font-weight: bold;
+}
+
+.contact em {
+	color: #ffecbb;
+	color: #;
 }
 
 .enabled {
