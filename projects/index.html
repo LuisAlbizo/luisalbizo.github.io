@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title> Inicio </title>
+	<title> Proyectos | Luis Albizo </title>
 	<link rel="stylesheet" href="/res/css/wing.min.css"/>
 	<link href="/res/fonts/Montserrat.css" rel="stylesheet">
 	<link rel="stylesheet" href="/res/css/green.css"/>
 </head>
 <body>
 	<header id="nav">
-		<button v-on:click="displayNav"> ... </button>
+		<div v-bind:class="animationClass" id="button-nav" v-on:click="displayNav">
+			<div id="bar1"></div>
+			<div id="bar2"></div>
+			<div id="bar3"></div>
+		</div>
 		<nav class="nav" v-if="display">
 			<a class="nav-item" href="/">Inicio</a>
 			<a class="nav-item" href="/blog">Blog</a>
