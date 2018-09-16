@@ -44,6 +44,27 @@ form {
 	border: 3px solid #669;
 }
 
+.card {
+	min-width: 40%;
+	max-width: 65%;
+	box-shadow: 0 10px 15px #000;
+	margin-bottom: 30px;
+}
+
+.card-header {
+	margin-top: 0;
+	margin-bottom: 5px;
+	padding-bottom: 20px;
+	color: #466;
+	padding-left: 15px;
+	border-bottom: 2px solid #466;
+}
+
+.card-footer .nav {
+	margin: auto;
+	text-align: center;
+}
+
 .contact {
 	font-weight: bold;
 }
@@ -57,11 +78,19 @@ form {
 	text-decoration: underline #ddd;
 }
 
-.nav {
+header .nav {
 	display: inline-block;
 	padding-top: 0;
 	margin-top: 0;
 	height: 10px;
+}
+
+.stack {
+	font-weight: bold;
+}
+
+.stack span {
+	color: #466;
 }
 
 #button-nav {
@@ -121,5 +150,9 @@ form {
 		padding:0;
 	}
 
+	.card {
+		min-width: 80%;
+		max-width: 100%;
+	}
 }
 

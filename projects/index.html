@@ -26,9 +26,22 @@
 		<h1 class="text-center">Proyectos Personales</h1>
 	</header>
 
-
+	<section id="list">
+		<div class="cards row center">
+			<div class="card col" v-for="el in list.projects">
+				<h5 class="card-header"> {{ el.name }} </h5>
+				<p class="card-body"> {{ el.desc }} </p>
+				<p class="card-body stack">Stack utilizado: <span v-for="s in el.stack">{{ s }} </span></p>
+				<footer class="card-footer nav text-center">
+					<a class="nav-item" v-bind:href="el.repo" target="_blank">Repositorio</a>
+					<a class="nav-item" v-bind:href="el.repo" target="_blank">Aprender mas</a>
+				</footer>
+			</div>
+		</div>
+	</section>
 
 	<script src="/res/js/vue.js"></script>
 	<script src="/res/js/main.js"></script>
+	<script src="/res/js/projects.js"></script>
 </body>
 </html>

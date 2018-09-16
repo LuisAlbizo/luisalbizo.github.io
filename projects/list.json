@@ -1,0 +1,29 @@
+{
+	"count" : 3,
+	"projects" : [
+		{
+			"id" : 1,
+			"name" : "Laim Bot",
+			"desc" : "Laim Bot es un bot para discord escrito en python y utilizando multiples librerias, sus comandos sirven para rolear fortunas, hacer scraping, jugar blackjack o utilizar un sistema de monedas. Es un bot de entretenimiento.",
+			"repo" : "https://github.com/LuisAlbizo/laim_bot",
+			"more" : "",
+			"stack" : ["python", "python-flask", "python-bokeh", "MongoDB", "Bootstrap"]
+		},
+		{
+			"id" : 2,
+			"name" : "Milachan",
+			"desc" : "Milachan es un framework para crear imageboards simple, separa la parte del backend y la logica de la aplicacion para hacer mas rapido el desarrollo de un tablon de imagenes. Implementa algoritmos de moderacion, colas de posteo asincronicas, un esquema sencillo de la informacion entre otras cosas.",
+			"repo" : "https://github.com/LuisAlbizo/milachan",
+			"more" : "",
+			"stack" : ["python", "python-asyncio", "MongoDB"]
+		},
+		{
+			"id" : 3,
+			"name" : "WardScript",
+			"desc" : "Es un lenguaje de programacion interpretado y escrito en c. Pretende ser un lenguaje minimalista y util, su mayor enfoque es ser un lenguaje academico al ser facil de implementar y definir estructuras de datos en el es mas sencillo. Es un lenguaje procedural y funcional (impuro), tiene closures, funciones anonimas (lambdas) y sus funciones son de primera clase.",
+			"repo" : "https://github.com/LuisAlbizo/WardScript",
+			"more" : "https://github.com/LuisAlbizo/WardScript/wiki",
+			"stack" : ["c", "flex", "bison"]
+		}
+	]
+}
