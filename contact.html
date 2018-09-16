@@ -13,6 +13,7 @@
 			<div id="bar2"></div>
 			<div id="bar3"></div>
 		</div>
+		<transition name="slide-fade">
 		<nav class="nav" v-if="display">
 			<a class="nav-item" href="/">Inicio</a>
 			<a class="nav-item" href="/blog">Blog</a>
@@ -20,11 +21,23 @@
 			<a class="nav-item" href="/about.html">Acerca de mi</a>
 			<a class="nav-item enabled" href="/contact.html">Contacto</a>
 		</nav>
+		</transition>
 		<h1 class="text-center">Contacto</h1>
 	</header>
 
-
-
+	<section>
+		<p>Tengo multiples redes sociales a las que puedes contactarme:</p>
+		<p class="contact">Discord: <em>Laim4.3k#6703</em> </p>
+		<p class="contact">Twitter: <em>@lualbizo</em> </p>
+		<h3>Enviame  un correo</h3>
+		<form action="https://formspree.io/albizo.luis@gmail.com" method="POST">
+			<label for="email">Correo electronico</label>
+			<input name="email" type="email" placeholder="Tu correo">
+			<label for="message">Mensaje</label>
+			<textarea name="message" placeholder="Tu mensaje"></textarea>
+			<button type="submit" class="center">Enviar</button>
+		</form>
+	</section>
 	<script src="/res/js/vue.js"></script>
 	<script src="/res/js/main.js"></script>
 </body>

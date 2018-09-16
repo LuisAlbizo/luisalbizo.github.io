@@ -1,3 +1,7 @@
+* {
+	color: #fff;
+}
+
 a {
 	text-decoration: none;
 	color: #45608f;
@@ -11,10 +15,25 @@ body {
 	background-color: #101610;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
 	color: #ffecbb;
 	font-family: 'Montserrat', sans-serif;
 	
+}
+
+input, textarea {
+	color: #000;
+	max-width: 100%;
+}
+
+form {
+	width: 50%;
+	margin: auto;
+}
+
+button {
+	color: #466;
+	background-color: #ddd;
 }
 
 .enabled {
@@ -41,6 +60,8 @@ h1 {
 	transition: 0.4s;
 }
 
+/* Animations */
+
 .change #bar1 {
 	-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
 	transform: rotate(-45deg) translate(-9px, 6px) ;
@@ -56,4 +77,32 @@ h1 {
 	-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
 	transform: rotate(45deg) translate(-8px, -8px) ;
 } 
+
+.slide-fade-enter-active {
+	transition: all .4s ease;
+}
+
+.slide-fade-leave-active {
+	transition: all .4s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+	transform: translateX(10px);
+	opacity: 0;
+}
+
+@media (max-width: 720px) {
+	section {
+		width: 95%;
+		margin: 0;
+		padding:0;
+	}
+
+	form {
+		width: 95%;
+		margin:0;
+		padding:0;
+	}
+
+}
 
