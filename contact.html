@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title> Inicio </title>
+	<link rel="stylesheet" href="/res/css/wing.min.css"/>
+	<link href="/res/fonts/Montserrat.css" rel="stylesheet">
+	<link rel="stylesheet" href="/res/css/green.css"/>
+</head>
+<body>
+	<header id="nav">
+		<button v-on:click="displayNav"> ... </button>
+		<nav class="nav" v-if="display">
+			<a class="nav-item" href="/">Inicio</a>
+			<a class="nav-item" href="/blog">Blog</a>
+			<a class="nav-item" href="/projects">Proyectos</a>
+			<a class="nav-item" href="/about.html">Acerca de mi</a>
+			<a class="nav-item enabled" href="/contact.html">Contacto</a>
+		</nav>
+		<h1 class="text-center">Contacto</h1>
+	</header>
+
+
+
+	<script src="/res/js/vue.js"></script>
+	<script src="/res/js/main.js"></script>
+</body>
+</html>

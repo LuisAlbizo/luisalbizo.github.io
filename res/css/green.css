@@ -1,0 +1,41 @@
+a {
+	text-decoration: none;
+	color: #45608f;
+}
+
+a:hover {
+	color: #458f60;
+}
+
+body {
+	background-color: #101610;
+}
+
+h1 {
+	color: #d0eede;
+	color: #ffecbb;
+	font-family: 'Montserrat', sans-serif;
+	
+}
+
+.enabled {
+	text-decoration: underline #ddd;
+}
+
+.nav {
+	display: inline;
+}
+
+#nav button {
+	padding: 5px;
+	font-weight: bolder;
+	font-size: 18px;
+	letter-spacing: 5px;
+	color: #111;
+	background-color: #fff;
+}
+
+#nav button:hover {
+	color: #fff;
+	background-color: #111;
+}
