@@ -19,11 +19,11 @@
 			<a class="nav-item" href="/">Inicio</a>
 			<a class="nav-item" href="/blog">Blog</a>
 			<a class="nav-item enabled" href="/projects">Proyectos</a>
-			<a class="nav-item" href="/about.html">Acerca de mi</a>
 			<a class="nav-item" href="/contact.html">Contacto</a>
 		</nav>
 		</transition>
 		<h1 class="text-center">Proyectos Personales</h1>
+		<hr/>
 	</header>
 
 	<section id="list">
@@ -32,7 +32,7 @@
 				<h5 class="card-header"> {{ el.name }} </h5>
 				<p class="card-body"> {{ el.desc }} </p>
 				<p class="card-body stack">Stack utilizado: <span v-for="s in el.stack">{{ s }} </span></p>
-				<footer class="card-footer nav text-center">
+				<footer class="card-footer nav center text-center">
 					<a class="nav-item" v-bind:href="el.repo" target="_blank">Repositorio</a>
 					<a class="nav-item" v-bind:href="el.more" target="_blank">Aprender mas</a>
 				</footer>

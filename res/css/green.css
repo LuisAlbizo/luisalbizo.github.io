@@ -51,6 +51,11 @@ form {
 	margin-bottom: 30px;
 }
 
+.card-body {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
 .card-header {
 	margin-top: 0;
 	margin-bottom: 5px;
@@ -83,6 +88,72 @@ header .nav {
 	padding-top: 0;
 	margin-top: 0;
 	height: 10px;
+}
+
+/* The side navigation menu */
+aside {
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+	position: absolute;
+	overflow: auto;
+	border-radius: 2px;
+}
+
+/* Sidebar links */
+aside a {
+	display: block;
+	color: black;
+	text-decoration: none;
+}
+
+/* Links on mouse-over */
+aside a:hover {
+	background-color: #555;
+	color: white;
+}
+
+aside .col {
+	margin: 0;
+	padding: 0;
+	min-width: 51%;
+}
+
+aside .col a {
+	padding: 10px;
+}
+
+aside .col input {
+	display: inline;
+	margin: 0;
+	padding: 5px;
+	max-width: 70%;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	box-shadow: none;
+	border: none;
+}
+
+aside .col input:hover {
+	box-shadow: none;
+	border: none;
+	color: #466;
+}
+
+aside .col button {
+	display: inline;
+	margin: 0;
+	padding: 5px;
+	max-width: 30%;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+section.blog {
+	margin-left: 200px;
+	padding: 1px 16px;
+	height: 1000px;
 }
 
 .stack {
@@ -138,10 +209,25 @@ header .nav {
 }
 
 @media (max-width: 720px) {
+	aside {
+  		width: 100%;
+		height: auto;
+		position: relative;
+	}
+	
+	aside a {
+		text-align: center;
+		float: none;
+	}
+
 	section {
-		width: 95%;
+		width: 100%;
 		margin: 0;
 		padding:0;
+	}
+
+	section.blog {
+		margin-left: 0;
 	}
 
 	form {
