@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 	<title> Blog | Luis Albizo </title>
+	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1,0">
 	<link rel="stylesheet" href="/res/css/wing.min.css"/>
 	<!--link rel="stylesheet" href="https://unpkg.com/wingcss"/-->
@@ -12,7 +13,7 @@
 </head>
 <body>
 	<header id="nav">
-		<div v-bind:class="animationClass" id="button-nav" v-on:click="displayNav">
+		<div :class="animationClass" id="button-nav" @click="displayNav">
 			<div id="bar1"></div>
 			<div id="bar2"></div>
 			<div id="bar3"></div>
@@ -33,7 +34,7 @@
 		<aside class="row">
 			<div class="col center">
 				<input v-model="query" type="text" placeholder="Busqueda"/>
-				<button v-on:click="search">Buscar</button>
+				<button @click="search">Buscar</button>
 			</div>
 			<div class="col">
 				<a>Test 2</a>
@@ -52,8 +53,8 @@
 				<div class="stack">
 					Tags: <span v-for="tag in entry.tags">{{tag}} </span>
 				</div>
-				<a v-on:click.prevent="displayEntry($event)" class="center" v-bind:href="entry.entry" :bid="entry.id">Leer</a>
-				<div class="blog-content" v-bind:id="'entry'+entry.id">
+				<a @click.prevent="displayEntry($event)" class="center" :href="entry.entry" :bid="entry.id">Leer</a>
+				<div class="blog-content" :id="'entry'+entry.id">
 				</div>
 				<hr/>
 			</article>

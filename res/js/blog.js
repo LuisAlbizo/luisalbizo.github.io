@@ -13,12 +13,13 @@ new Vue({
 				' - ' + date[3] + ':' + date[4] + ':' + date[5];
 		},
 		displayEntry: function(event) {
-			id	= event.currentTarget.getAttribute('bid');
-			entryF	= this.list.entrys[this.list.entrys.length - id].entry;
+			id = event.currentTarget.getAttribute('bid');
+			entryF = this.db({id: parseInt(id)}).first().entry;
 			console.log(id, entryF);
 			document.getElementById('entry'+id).innerHTML = getHTML(entryF);
 		},
 		search: function(event) {
+			alert(this.query);
 		}
 	}
 });
