@@ -97,6 +97,8 @@ form {
 	margin: auto;
 	background-color: #000;
 	border-radius: 2px;
+	overflow: auto;
+	white-space: nowrap;
 }
 
 header .nav {
@@ -198,11 +200,18 @@ section.blog {
 	transition: 0.4s;
 }
 
+.load {
+	margin-top: 8px;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
 /* Animations */
 
 .change #bar1 {
 	-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
 	transform: rotate(-45deg) translate(-9px, 6px) ;
+	background-color: #966;
 }
 
 /* Fade out the second bar */
@@ -214,6 +223,7 @@ section.blog {
 .change #bar3 {
 	-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
 	transform: rotate(45deg) translate(-8px, -8px) ;
+	background-color: #966;
 } 
 
 .slide-fade-enter-active {
@@ -252,6 +262,7 @@ section.blog {
 	}
 
 	section.blog {
+		padding: 0;
 		width: 98%;
 		margin-left: 0;
 	}

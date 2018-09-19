@@ -33,7 +33,8 @@
 	<section id="blog">
 		<aside class="row">
 			<div class="col center">
-				<input v-model="query" type="text" placeholder="Buscar por titulo"/>
+				<input v-model="query" type="text"
+					placeholder="Buscar por titulo"/>
 				<button @click="search">Buscar</button>
 			</div>
 			<div class="col center">
@@ -41,27 +42,47 @@
 				<button @click="searchTag">Buscar</button>
 			</div>
 			<div class="col">
-				<a>Ordenar por fecha (reciente)</a>
+				<a @click="sortByDateDesc">Ordenar por fecha (reciente)</a>
 			</div>
 			<div class="col">
-				<a>Ordenar por fecha (antiguo)</a>
+				<a @click="sortByDateAsec">Ordenar por fecha (antiguo)</a>
 			</div>
 			<div class="col">
-				<a>Ordenar por titulo</a>
+				<a @click="sortByTitle">Ordenar por titulo</a>
 			</div>
 		</aside>
 		<section class="blog">
-			<article v-for="entry in list" class="entry">
+			<article v-for="entry in list.limit(Limit).get()" class="entry">
 				<h2 class="text-center">{{ entry.title }}</h2>
 				<i> {{ formatDate(entry.date) }} </i>
 				<div class="stack">
 					Tags: <span v-for="tag in entry.tags">{{tag}} </span>
 				</div>
-				<a @click.prevent="displayEntry($event)" class="center" :href="entry.entry" :bid="entry.id">Leer</a>
+				<a @click.prevent="displayEntry($event)"
+					class="text-center center" :href="entry.entry"
+					:bid="entry.id">Leer</a>
 				<div class="blog-content" :id="'entry'+entry.id">
 				</div>
 				<hr/>
 			</article>
+			<article v-for='entry in more' class='entry'>
+				<h2 class="text-center">{{ entry.title }}</h2>
+				<i> {{ formatDate(entry.date) }} </i>
+				<div class="stack">
+					Tags: <span v-for="tag in entry.tags">{{tag}} </span>
+				</div>
+				<span>
+				<a @click.prevent="displayEntry($event)"
+					class="text-center center" :href="entry.entry"
+					:bid="entry.id">Leer</a>
+				<div class="blog-content" :id="'entry'+entry.id">
+				</div>
+				</span>
+				<hr/>
+			</article>
+			<div class='load text-center'>
+				<a @click='loadMore'>Cargar mas</a>
+			</div>
 		</section>
 	</section>
 
