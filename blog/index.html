@@ -8,6 +8,7 @@
 	<link href="/res/fonts/Montserrat.css" rel="stylesheet">
 	<!--link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"-->
 	<link rel="stylesheet" href="/res/css/green.css"/>
+	<link rel="stylesheet" href="/res/css/vim.css"/>
 </head>
 <body>
 	<header id="nav">
@@ -34,10 +35,6 @@
 				<input v-model="query" type="text" placeholder="Busqueda"/>
 				<button v-on:click="search">Buscar</button>
 			</div>
-			<div class="col center">
-				<input v-model="sort" type="select" placeholder="Busqueda"/>
-				<button v-on:click="search">Buscar</button>
-			</div>
 			<div class="col">
 				<a>Test 2</a>
 			</div>
@@ -49,7 +46,17 @@
 			</div>
 		</aside>
 		<section class="blog">
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			<article v-for="entry in list.entrys" class="entry">
+				<h2 class="text-center">{{ entry.title }}</h2>
+				<i> {{ formatDate(entry.date) }} </i>
+				<div class="stack">
+					Tags: <span v-for="tag in entry.tags">{{tag}} </span>
+				</div>
+				<a v-on:click.prevent="displayEntry($event)" class="center" v-bind:href="entry.entry" :bid="entry.id">Leer</a>
+				<div class="blog-content" v-bind:id="'entry'+entry.id">
+				</div>
+				<hr/>
+			</article>
 		</section>
 	</section>
 

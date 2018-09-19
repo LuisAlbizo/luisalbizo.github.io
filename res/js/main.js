@@ -16,6 +16,21 @@ function getJSON(url, async) {
 	return jresp;
 };
 
+// Peticion ajax a html
+function getHTML(url) {
+	var xhr = new XMLHttpRequest();
+	var resp = null;
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			resp = xhr.responseText;
+		}
+	};
+	xhr.open("GET", url, false);
+	xhr.send(null);
+	return resp;
+};
+
+
 var nav = new Vue({
 	el: "#nav",
 	data: {

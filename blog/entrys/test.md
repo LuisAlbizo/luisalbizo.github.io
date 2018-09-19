@@ -4,8 +4,7 @@
 * test 2
 * test 3
 
-
-python:
+Codigo de bloque:
 	
 	def suma(x, y):
 		return x + y
