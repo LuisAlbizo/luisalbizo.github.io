@@ -111,7 +111,8 @@ aside {
 	margin: 0;
 	padding: 0;
 	width: 200px;
-	background-color: #f1f1f1;
+	background-color: #383f51;
+	background-color: #466;
 	position: absolute;
 	overflow: auto;
 	border-radius: 2px;
@@ -120,14 +121,14 @@ aside {
 /* Sidebar links */
 aside a {
 	display: block;
-	color: black;
+	color: #101;
 	text-decoration: none;
 }
 
 /* Links on mouse-over */
 aside a:hover {
-	background-color: #555;
-	color: white;
+	background-color: #202820;
+	color: #fff;
 }
 
 aside .col {
@@ -140,27 +141,32 @@ aside .col a {
 	padding: 10px;
 }
 
-aside .col input {
+aside .col input[type="text"] {
 	display: inline;
 	margin: 0;
 	padding: 5px;
+	padding-top: 9px;
+	padding-bottom: 9px;
 	max-width: 70%;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 	box-shadow: none;
 	border: none;
+	background-color: #151c27;
+	color: #fff;
 }
 
-aside .col input:hover {
+aside .col input[type="text"]:hover {
 	box-shadow: none;
 	border: none;
-	color: #466;
 }
 
 aside .col button {
 	display: inline;
 	margin: 0;
 	padding: 5px;
+	padding-top: 9px;
+	padding-bottom: 9px;
 	max-width: 30%;
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
@@ -169,7 +175,6 @@ aside .col button {
 section.blog {
 	margin-left: 200px;
 	padding: 1px 16px;
-	height: 1000px;
 }
 
 .stack {
@@ -225,6 +230,10 @@ section.blog {
 }
 
 @media (max-width: 720px) {
+	article.entry {
+		padding: 0;
+	}
+	
 	aside {
   		width: 100%;
 		height: auto;
@@ -239,7 +248,7 @@ section.blog {
 	section {
 		width: 100%;
 		margin: 0;
-		padding:0;
+		padding: 0;
 	}
 
 	section.blog {

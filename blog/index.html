@@ -33,21 +33,25 @@
 	<section id="blog">
 		<aside class="row">
 			<div class="col center">
-				<input v-model="query" type="text" placeholder="Busqueda"/>
+				<input v-model="query" type="text" placeholder="Buscar por titulo"/>
 				<button @click="search">Buscar</button>
 			</div>
-			<div class="col">
-				<a>Test 2</a>
+			<div class="col center">
+				<input v-model="tag" type="text" placeholder="Filtrar por tag"/>
+				<button @click="searchTag">Buscar</button>
 			</div>
 			<div class="col">
-				<a>Test 2</a>
+				<a>Ordenar por fecha (reciente)</a>
 			</div>
 			<div class="col">
-				<a>Test 2</a>
+				<a>Ordenar por fecha (antiguo)</a>
+			</div>
+			<div class="col">
+				<a>Ordenar por titulo</a>
 			</div>
 		</aside>
 		<section class="blog">
-			<article v-for="entry in list.entrys" class="entry">
+			<article v-for="entry in list" class="entry">
 				<h2 class="text-center">{{ entry.title }}</h2>
 				<i> {{ formatDate(entry.date) }} </i>
 				<div class="stack">

@@ -1,11 +1,14 @@
 
-blog = getJSON('list.json', false);
+const Limit = 5;
+
+blog = TAFFY(getJSON('list.json', false).entrys);
 new Vue({
 	el:'#blog',
 	data: {
-		list: blog,
+		list: blog().limit(Limit).get(),
 		query: '',
-		db: TAFFY(blog.entrys)
+		tag: '',
+		db: blog
 	},
 	methods: {
 		formatDate: function(date) {
@@ -15,11 +18,14 @@ new Vue({
 		displayEntry: function(event) {
 			id = event.currentTarget.getAttribute('bid');
 			entryF = this.db({id: parseInt(id)}).first().entry;
-			console.log(id, entryF);
 			document.getElementById('entry'+id).innerHTML = getHTML(entryF);
 		},
 		search: function(event) {
-			alert(this.query);
+			this.list = this.db({title: {regex: new RegExp(this.query)}})
+				.limit(Limit).get();
+		},
+		searchTag: function(event) {
+		
 		}
 	}
 });
