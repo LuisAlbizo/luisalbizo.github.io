@@ -3,7 +3,7 @@ function clearEntrys() {
 	var entrys = document.getElementsByClassName('blog-content');
 	for (i = 0; i < entrys.length; i++) {
 		entrys[i].innerHTML = '';
-		a = entrys[i].parentNode.getElementsByTagName('a')[0];
+		a = entrys[i].parentNode.getElementsByClassName('read')[0];
 		a.innerHTML = 'Leer';
 		a.setAttribute('style', 'display:block;');
 	}
@@ -39,11 +39,16 @@ new Vue({
 				this.list.start(this.page * Limit).get()
 			);
 		},
+		loadTag: function(event) {
+			this.tag = event.currentTarget.getAttribute('href');
+			this.searchTag();
+		},
 		// Search methods
 		search: function(event) {
 			clearEntrys();
 			this.page = 1, this.more = [];
-			this.list = blog({title: {regex: new RegExp(this.query)}});
+			// this.list = blog({title: {regex: new RegExp(this.query)}});
+			this.list = blog({title: {likenocase: this.query}});
 		},
 		searchTag: function(event) {
 			clearEntrys();

@@ -17,7 +17,7 @@ article.entry {
 
 article.entry button {
 	display: inline-block;
-	margin:auto;
+	margin: auto;
 }
 
 body {
@@ -99,6 +99,10 @@ form {
 	border-radius: 2px;
 	overflow: auto;
 	white-space: nowrap;
+}
+
+.id {
+	float: right;
 }
 
 header .nav {
@@ -183,8 +187,9 @@ section.blog {
 	font-weight: bold;
 }
 
-.stack span {
+.stack span, .stack a {
 	color: #466;
+	margin-left: 5px;
 }
 
 #button-nav {
@@ -263,7 +268,7 @@ section.blog {
 
 	section.blog {
 		padding: 0;
-		width: 98%;
+		width: 100%;
 		margin-left: 0;
 	}
 

@@ -55,11 +55,13 @@
 			<article v-for="entry in list.limit(Limit).get()" class="entry">
 				<h2 class="text-center">{{ entry.title }}</h2>
 				<i> {{ formatDate(entry.date) }} </i>
+				<strong class="id"> ID: {{entry.id}}</strong>
 				<div class="stack">
-					Tags: <span v-for="tag in entry.tags">{{tag}} </span>
+					Tags: <a v-for="tag in entry.tags" :href="tag"
+						@click.prevent="loadTag($event)">{{tag}} </a>
 				</div>
 				<a @click.prevent="displayEntry($event)"
-					class="text-center center" :href="entry.entry"
+					class="text-center center read" :href="entry.entry"
 					:bid="entry.id">Leer</a>
 				<div class="blog-content" :id="'entry'+entry.id">
 				</div>
@@ -68,12 +70,14 @@
 			<article v-for='entry in more' class='entry'>
 				<h2 class="text-center">{{ entry.title }}</h2>
 				<i> {{ formatDate(entry.date) }} </i>
+				<strong class="id"> ID: {{entry.id}}</strong>
 				<div class="stack">
-					Tags: <span v-for="tag in entry.tags">{{tag}} </span>
+					Tags: <a v-for="tag in entry.tags" :href="tag"
+						@click.prevent="loadTag($event)">{{tag}} </a>
 				</div>
 				<span>
 				<a @click.prevent="displayEntry($event)"
-					class="text-center center" :href="entry.entry"
+					class="text-center center read" :href="entry.entry"
 					:bid="entry.id">Leer</a>
 				<div class="blog-content" :id="'entry'+entry.id">
 				</div>
