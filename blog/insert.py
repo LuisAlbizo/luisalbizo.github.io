@@ -1,12 +1,12 @@
 import forgive # JSON Database system
-import markdown, pygments, micawber # Rendering html
+import markdown, pygments#, micawber # Rendering html
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 import os, colorama, time, itertools
 colorama.init()
 print(colorama.Fore.MAGENTA)
 
-providers = micawber.bootstrap_basic()
+#providers = micawber.bootstrap_basic()
 formatter = HtmlFormatter()
 db = forgive.ForgiveDB('list.json')
 
@@ -29,21 +29,22 @@ def new_entry():
     title = input("Title: ")
     tags = input("Tags: ").lower().split(" ")
     print("Listed tags:",tags)
-    entry = input("Entry file: ")
+    entry = t.to_bytes(4, 'little').hex()
     input("Opening file entrys/%s.md to edit. (Press enter)" % entry)
     print(colorama.Style.RESET_ALL)
-    os.system("vim entrys\\%s.md" % entry)
+    os.system("vim entrys/%s.md" % entry)
     print(colorama.Fore.MAGENTA)
 
     # Rendering the entry
     with open("entrys/%s.md" % entry, "r") as f:
         content = markdown.markdown(f.read())
-        content = micawber.parse_html(content, providers)
+        #content = micawber.parse_html(content, providers)
 
     # Rendering the code tags
     from bs4 import BeautifulSoup as bs
     soup = bs(content, 'html.parser')
-    for el in soup.find_all('pre'):
+    for el in soup.find_all('code'):
+        el = el.parent
         print(colorama.Fore.LIGHTCYAN_EX)
         print(el.code.string)
         print(colorama.Fore.MAGENTA)
@@ -51,9 +52,14 @@ def new_entry():
         hl = lexify(lang, el.code.string)
         el.replaceWith(bs(hl, 'html.parser'))
 
-    content = soup.decode()
+    with open('template.html', 'r') as f:
+        content = bs(f.read(), 'html.parser')
+
+    content.section.insert(1, soup)
+    content.h1.insert(1, title)
+
     with open("entrys/%s.html" % entry, "w") as f:
-        f.write(content)
+        f.write(content.decode())
 
     print('Rendered file saved in: %s.html' % entry)
 

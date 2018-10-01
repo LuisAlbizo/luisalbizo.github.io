@@ -1,0 +1,370 @@
+
+## Aspectos de dise&ntilde;o
+
+El lenguaje de programacion wardscript es un lenguaje de programacion que yo invente, con la intencion de crear el lenguaje de programacion de alto nivel mas minimalista de todos.
+Su sintaxis con solo 8 palabras reservadas y teniendo solo 4 tipos de datos lo hacen el lenguaje mas minimalista que conozco (sin contar lenguajes esotericos como brainfuck). La idea de este lenguaje vino a mi despues de programar un interprete de brainfuck en python, queria crear algo similar, al principio pense en hacer un lenguaje esoterico pero entre mas me tomaba enserio este lenguaje dejaba de verlo como un lenguaje esoterico y mas como un lenguaje "real".
+Me inspire bastante en lua, en lua el unico tipo de dato abstracto es la tabla, que vendria a ser un diccionario en python, con la tabla se puede implementar cualquier TAD posible (pilas, colas, arboles binarios, grafos, etc.), pues en wardscript el tipo de dato abstracto que hay es el '**Nodo**' que es muy parecido solo que es inmutable o estatico (hablare de esto mas adelante) como un struct en c.
+
+En este escrito no voy a ense&ntilde;ar como programar en WardScript para eso hay un tutorial en la [wiki](https://github.com/LuisAlbizo/WardScript/wiki) (esta en ingles), mas bien voy a explicar como funciona y porque lo dise&ntilde;e de esa manera.
+
+**Palabras Reservadas:**
+* <pre>if</pre>
+* <pre>then</pre>
+* <pre>else</pre>
+* <pre>end</pre>
+* <pre>loop</pre>
+* <pre>exit</pre>
+* <pre>func</pre>
+* <pre>nonlocal</pre>
+
+**Tipos de datos:**
+* Byte
+* Nodo
+* Nil
+* Funcion
+
+### Sintaxis
+
+La sintaxis de Ward es sencilla, hay condicionales, ciclos, declaraciones y expresiones.
+
+Ejemplo:
+	
+	? declaracion ?
+	x := 42, y := nil;
+	
+	? condicional ?
+	if x then
+		? expresion ?
+		present(x);
+	else
+		? expresion ?
+		present(y);
+	end
+	
+	i := 255;
+	? ciclo ?
+	loop
+		if !i then
+			exit;
+		else
+			? expresion ?
+			present(i);
+			i := i - 1;
+		end
+	end
+	
+
+Una declaracion o asignacion se hace en la forma <pre>var\_name := *expresion*;</pre>.
+
+Una condicional se puede escribir de 3 formas:
+	
+	? solo if ?
+	if cond then
+		? bloque de codigo ?
+	end
+	
+	? if-else ?
+	if cond then
+		? bloque if ?
+	else
+		? bloque else ?
+	end
+	
+	? if-else-if ?
+	if cond_1 then
+		? bloque 1 ?
+	else-if cond_2 then
+		? bloque 2 ?
+	else
+		? bloque else ?
+	end
+	
+
+la primera solo ejecuta un bloque de codigo si se cumple una condicion, la segunda ejecuta ademas un bloque de codigo si no se cumple la condicion y la tercera solo es *syntactic sugar* para no encadenar muchos if's dentro de else's (internamente si construye un arbol sintactico asi, por lo que no es mas eficiente que eso).
+
+Un ciclo simplemente es todo lo que este dentro de un *loop* y un *end*:
+	
+	loop
+		? bloque ?
+	end
+	
+este ciclo se repite indefinidamente, la unica forma de continuar la ejecucion es con la palabra reservada *exit*, que es como un break en otros lenguajes de programacion.
+
+ejemplo:
+	
+	i := 0;
+	loop
+		if i > 15 then
+			exit;
+		else
+			present(i);
+			i := i+1;
+		end
+	end
+	
+
+asi que basicamente wardscript te obliga a seguir esta sintaxis, pronto talvez agregue una sintaxis mas simple.
+
+Una expresion es todo lo que en wardscript regrese un valor/dato, por ejemplo una suma, una llamada a una funcion, una declaracion de funcion incluso es una expresion.
+
+### Tipos de datos
+
+Solo hay 4 tipos de datos en WardScript, que son los suficientes creo yo para hacer un lenguaje de programacion de alto nivel y ademas totalmente expresivo (se puede programar lo que sea), el tipo de dato funcion talvez no es necesario pero a mi me gustan los lenguajes que tratan a la funciones como valores de primera clase (como lua, python o javascript).
+
+#### El Byte
+
+Es simplemente un entero sin signo menor a 256. Si las computadoras representan todo con bytes entonces tambien puedes programar y representar cualquier dato o informacion solo con bytes, solo hay que saber utilizarlos bien. Puede representar un numero o un caracter.
+
+#### El Nodo
+
+Segun este [articulo](https://es.wikipedia.org/wiki/Nodo_%28inform%e1tica%29) de wikipedia un nodo es:
+*En estructuras de datos dinamicas un nodo es un registro que contiene un dato de interes y al menos un puntero para referenciar (apuntar) a otro nodo. Si la estructura tiene solo un puntero, la unica estructura que se puede construir con el es una lista, si el nodo tiene mas de un puntero ya se pueden construir estructuras mas complejas como arboles o grafos.*
+y me parece bastante acertada esta definicion, el nodo a diferencia de los diccionarios no permite nuevas claves ni permite eliminar las que ya hay por lo que es estatico:
+	
+	root := {
+		data := 25,
+		next := nil
+	};
+	
+esto es un nodo en wardscript, **root** es el nodo y **data** y **next** son sus miembros, a estos miembros solo se les puede modificar el valor pero no eliminarlos o crear nuevos.
+
+#### El tipo Nil
+
+Este tipo de dato es el mismo que entodos los lenguajes de programacion, nil en lua, None en python o NULL en c. Representa la ausencia de valor y es util para representar el final de una estructura de datos recursiva representada con nodos.
+
+#### La funcion
+
+Decidi que la funcion fuera un tipo de dato, esto para hacer mas facil su manejo y poder crear funciones de orden superior, callbacks, closures (cosa tremendamente util en este lenguaje) y otras propiedades mas de la programacion funcional.
+WardScript aun asi no es un lenguaje de programaci&oacute;n puramente funcional ya que sus funciones tienen efectos colaterales y hay mutacion de datos, por lo tanto ser&iacute;a mas correcto llamar a estas funciones subrutinas o procedimientos en lugar de funciones pero ya es costumbre llamar a todo funciones en lenguajes de programaci&oacute;n.
+
+Hay 2 formas de escribir una funcion:
+	
+	? forma regular ?
+	suma := func x, y: result:
+		result := x + y;
+	end;
+	
+	? sintaxis tipo lambda ?
+	suma' := func { x, y : x + y };
+	
+las funciones en este lenguaje se escriben de una manera peculiar, lo primero es que no existe la palabra reservada *return*, ya que realmente no es necesaria, es por esto que existe una *variable de retorno* en su lugar.
+
+**Como funciona**:
+Una funcion tiene 3 partes fundamentales: argumentos, variable de retorno y bloque de codigo; los argumentos son la cantidad de expresiones que toma una funcion al momento de su llamada y el nombre al que estaran asociadas dentro del Scope de la funcion, la variable de retorno es la variable que debe existir en el scope cuando finalize la ejecucion de una funcion y retornara lo que haya en esa variable y el bloque de codigo es lo que se ejecutara cada que se llame a la funcion.
+
+### Proposito
+
+El proposito de este lenguaje es que sea un lenguaje minimalista y academico siendo facil de implementar, ademas del reto que supone programar algo en el ya que los programadores estan acostumbrados a que en su lenguaje haya tipos de datos y operaciones muy complejas como divison con punto flotante, cadenas de texto y operaciones para estas. En wardscript por ejemplo los string deberan implementarse con nodos y bytes, siendo un byte un caracter de la cadena y el nodo debera contener este byte y una referencia al nodo siguiente (una lista enlazada basicamente), un numero entero grande debera ser implementado tambien con nodos y debera escojerse *little endian* o *big endian* para representar estos numeros; si no se sabe lo que es esto: exacto, ese es el proposito de este lenguaje, aprender como funcionan los sistemas digitales y los lenguajes de programacion internamente, como almacenan la informacion (aunque obviamente no lo hacen con nodos pero bueno, un sacrificio para mantener el minimalismo).
+
+### Gramatica del lenguaje
+
+Estas son las reglas gramaticales estilo bison:
+	
+	program: block;
+
+	block:
+	     | statement block
+	     ;
+
+	statement: SEMICOLON
+		 | expression SEMICOLON
+		 | IF expression THEN block END
+		 | IF expression THEN block ELSE block END
+		 | IF expression THEN block ELSE '-' statement
+		 | FOREVER block END
+		 | assignment SEMICOLON
+		 | NONLOCAL assignment SEMICOLON
+		 | expression DOT NAME EQ expression SEMICOLON
+		 | EXIT SEMICOLON
+		 ;
+
+	assignment: NAME EQ expression
+		  | NAME EQ expression COMMA assignment
+		  ;
+
+	expression: NUMBER
+		  | NAME
+		  | NONLOCAL NAME
+		  | STRING
+		  | LPARENT expression RPARENT
+		  | expression LPARENT args RPARENT
+		  | expression DOT NAME
+		  | expression COLON NAME LPARENT args RPARENT
+		  | FUNCTION names COLON NAME COLON block END
+		  | FUNCTION LBRACE names COLON expression RBRACE
+		  | LBRACE assignment RBRACE
+		  | LBRACKET args RBRACKET
+		  ;
+
+	expression: expression '+' expression
+		  | expression '-' expression
+		  | expression '<<' expression
+		  | expression '>>' expression
+		  | expression '>' expression
+		  | expression '>=' expression
+		  | expression '<' expression
+		  | expression '<=' expression
+		  | expression '==' expression
+		  | expression '/=' expression
+		  | expression '&&' expression
+		  | expression '||' expression
+		  | '!' expression
+		  | '#' expression
+		  ;
+
+	args:
+	    | expression
+	    | expression COMMA args
+	    ;
+
+	names:
+	     | NAME
+	     | NAME COMMA names
+	     ;
+
+## Aspectos tecnicos o de implementacion
+
+Describire brevemente como programe el interprete para este lenguaje.
+El lenguaje de programacion que utiliza fue C, la razon es que queria eficiencia y ademas me divierte programar en C para ser honesto. Ademas utilize una herramienta llamada Bison que genera analizadores semanticos, asi solo tengo que escribir las reglas gramaticales de una manera sencilla y bison analiza el texto por mi, para el analizador lexico al principio use Flex que es una herramienta que tambien se usa mucho junto con Bison pero deje de usarlo porque era mejor hacer un analizador sintactico hecho a mano y asi lo hice.
+
+Faltas que tiene el interprete:
+
+* Recolector de Basura
+* Backtrace de errores
+* Se&ntilde;alamiento de errores (linea)
+
+Todo esto lo ire agregando poco a poco ademas de que ya tengo una idea para todo, un sistema de conteo de referencias para el recolector de basura y almacenar informacion de la linea el que esta escrito un statement dentro del nodo del AST y una pila de llamadas para el backtracking.
+
+### Estructuras de datos utilizadas
+
+Para el almacenamiento de las variables implemente un diccionario en C, hice un arbol binario de busqueda autobalanceado AVL, tambien lo uso para el Scope y los Nodos.
+
+Para almacenar los argumentos de funciones y bloques de codigo uso Stacks.
+
+### Muestra de codigo C
+
+Algunos ejemplos de el codigo escrito en C para el interprete.
+
+#### Abstrac Syntax Tree
+
+Un nodo del arbol de sintaxis luce algo asi:
+	
+	struct func_c {
+		unsigned int type; // AST_FUNC_C
+		char return_name[MAX_DICT_KEY];
+		stack *argnames;
+		stack *code_block;
+	};
+	
+esta estructura almacena las 3 partes que conforman una funcion como ya habia explicado antes: argumentos, variable de retorno y bloque de codigo, usa Stacks para los argumentos y el bloque, (el bloque es un stack de otros nodos sintacticos) y la variable de retorno la almacena simplemente en una cadena de texto de maximo 128 bytes de longitud.
+La funcion que construye este nodo es esta:
+	
+	st_st *new_function_construct(char *return_name, stack *argnames, stack *code_block) {
+		st_function_construct *fc = astalloc(sizeof(st_function_construct));
+		fc->type = AST_FUNC_C;
+		strncpy(fc->return_name, return_name, MAX_DICT_KEY);
+		fc->argnames = argnames;
+		fc->code_block = code_block;
+		return (st_st *) fc;
+	}
+	
+esta funcion toma como parametro los 3 elementos anteriores.
+
+#### Evaluator
+
+La siguiente funcion es un poco mas complicada, es la funcion que se llama al estar interpretando el programa y por fin ejecutando las instruciones, especificamente esta funcion se encarga de ejecutar las llamadas a funciones, creando el Scope de la funcion, asignando al Scope los argumentos que se le pasaron, asegurando que el numero de argumentos pasados y requeridos por la funcion sean el mismo y ejecutando el bloque de codigo en el Scope de la funcion.
+
+Primero veamos como es el Nodo Sintactico que almacena esta llamada:
+	
+	struct call {
+		unsigned int type; // AST_CALL
+		struct st *callable;
+		stack *args; // Stack of statements
+	};
+	
+es bastante sencillo, contiene un arbol sintactico que representa una expresion (que debe retornar una funcion) y un Stack de argumentos (mas expresiones).
+
+Funcion:
+	
+	/* CALL */
+	
+	st_st *eva_call(st_call *call, Scope *S) {
+		B_Function *f = (B_Function *) ((st_object *) eva_(call->callable, S))->obj;
+		if (f->type != B_FUNCTION)
+			raiseError(UNCALLABLE_ERROR, "not a function expression");
+		stack_node *stat, *argval;
+		B_Object *return_obj;
+		Scope *FS;
+		switch (f->ftype) {
+			case B_FUNCTYPE:
+				FS = newScope(f->state); // The first-level scope is the one that existed
+							// in the context where function was created
+				Scope_Concat(FS, S); // For closure functionality
+				// Setting the arguments on the FScope
+				if (f->argnames->count != call->args->count)
+					raiseError(ARGCOUNT_ERROR, "");
+				argval = call->args->top;
+				stack_node *argname = f->argnames->top;
+				while (argval && argname) {
+					Scope_Set(FS, ((st_name *) argname->data)->name,
+						(Scope_Object *) ((st_object *) eva_((st_st *) argval->data, S))->obj);
+					argval = argval->next;
+					argname = argname->next;
+				}
+				// Evaluating the code of the function
+				if (f->code_block) {
+					stat = f->code_block->top;
+					while (stat) {
+						if (eva_((st_st *) stat->data, FS)->type == AST_EXIT) break;
+						else stat = stat->next;
+					}
+				}
+				return_obj = (B_Object *) Scope_Get(FS, f->return_name);
+				if (!return_obj)
+					raiseError(UNDECLARED_ERROR, "return name not declared");
+				break;
+			case C_FUNCTYPE:
+				FS = newScope(S);
+				stack *evalargs = newstack(), *passargs = newstack();
+				stack_Data *arg = stack_pop(call->args);
+				while (arg) {
+					stack_push(evalargs, arg);
+					arg = stack_pop(call->args);
+				}
+				arg = stack_pop(evalargs);
+				while (arg) {
+					stack_push(call->args, arg);
+					stack_push(passargs, 
+							(stack_Data *) ((st_object *) eva_((st_st *) arg, S))->obj);
+					arg = stack_pop(evalargs);
+				}
+				return_obj = f->cfunc(passargs, FS);
+				break;
+		}
+		return new_object(return_obj);
+	}
+	
+1. Evalua la expresion y revisa que sea una funcion
+2. Revisa que clase de funcion es (una escrita en C, es decir que es parte de la interfaz del lenguaje) o una escrita en WardScript.
+3. Si es escrita en WardScript:
+	1. Crea un nuevo scope cuyo scope superior sera en el que la funcion fue construida (esto es para crear la funcionalidad 'closure' o encapsulamiento)
+	2. Concatena ese Scope con el Scope en el que la funcion fue llamada para tener acceso las variables de este entorno tambien y las globales.
+	3. Revisa que el numero de argumentos pasados en llamada y el numero de argumentos requeridos son el mismo, de lo contrario lanza un error.
+	4. Evalua las expresiones que fueron pasadas como parametros y las asigna al Scope de la funcion con los nombres de los argumentos en su declaracion.
+	5. Evalua cada statement en el bloque de codigo de la funcion.
+	6. Busca en el Scope el objeto que tiene asociada la variable de retorno y si esta no fue declarada lanza un error.
+	7. Retorna.
+4. Si es escrita en C:
+	1. Crea un nuevo scope.
+	2. Crea un Stack de argumentos nuevo.
+	3. Evalua todos los argumentos de la llamada y los pasa al Stack nuevo.
+	4. Llama a la funcion en C (el nodo sintactico debe contener un puntero a esa funcion) y le pasa como parametro el Stack de argumentos evaluados y el nuevo Scope.
+	5. Retorna lo que retorno la llamada a la funcion C
+
+
+***Nota***: el momento/entorno de llamada de una funcion y el momento/entorno donde fue construida no son el mismo.
+
+## Continuara...
+
+Hare otra entrada hablando mas a fondo de la implementacion y haciendo un mini-tutorial de como programar un interprete para WardScript. Esta fue mi primer entrada en un blog por cierto :).
+

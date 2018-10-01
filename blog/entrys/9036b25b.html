@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<title> Blog | Luis Albizo </title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1,0" name="viewport"/>
+<link href="/res/css/wing.min.css" rel="stylesheet"/>
+<!--link rel="stylesheet" href="https://unpkg.com/wingcss"/-->
+<link href="/res/fonts/Montserrat.css" rel="stylesheet"/>
+<!--link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"-->
+<link href="/res/css/green.css" rel="stylesheet">
+<link href="/res/css/vim.css" rel="stylesheet"/>
+</link></head>
+<body>
+<header id="nav">
+<div :class="animationClass" @click="displayNav" id="button-nav">
+<div id="bar1"></div>
+<div id="bar2"></div>
+<div id="bar3"></div>
+</div>
+<transition name="slide-fade">
+<nav class="nav" v-if="display">
+<a class="nav-item" href="/">Inicio</a>
+<a class="nav-item" href="/blog">Blog</a>
+<a class="nav-item" href="/projects">Proyectos</a>
+<a class="nav-item" href="/contact.html">Contacto</a>
+</nav>
+</transition>
+<h1 class="text-center">Lenguaje WardScript</h1>
+<hr/>
+</header>
+<section class="entry" id="entry">
+<h2>Aspectos de dise&ntilde;o</h2>
+<p>El lenguaje de programacion wardscript es un lenguaje de programacion que yo invente, con la intencion de crear el lenguaje de programacion de alto nivel mas minimalista de todos.
+Su sintaxis con solo 8 palabras reservadas y teniendo solo 4 tipos de datos lo hacen el lenguaje mas minimalista que conozco (sin contar lenguajes esotericos como brainfuck). La idea de este lenguaje vino a mi despues de programar un interprete de brainfuck en python, queria crear algo similar, al principio pense en hacer un lenguaje esoterico pero entre mas me tomaba enserio este lenguaje dejaba de verlo como un lenguaje esoterico y mas como un lenguaje "real".
+Me inspire bastante en lua, en lua el unico tipo de dato abstracto es la tabla, que vendria a ser un diccionario en python, con la tabla se puede implementar cualquier TAD posible (pilas, colas, arboles binarios, grafos, etc.), pues en wardscript el tipo de dato abstracto que hay es el '<strong>Nodo</strong>' que es muy parecido solo que es inmutable o estatico (hablare de esto mas adelante) como un struct en c.</p>
+<p>En este escrito no voy a ense&ntilde;ar como programar en WardScript para eso hay un tutorial en la <a href="https://github.com/LuisAlbizo/WardScript/wiki">wiki</a> (esta en ingles), mas bien voy a explicar como funciona y porque lo dise&ntilde;e de esa manera.</p>
+<p><strong>Palabras Reservadas:</strong>
+<em> <pre>if</pre>
+</em> <pre>then</pre>
+<em> <pre>else</pre>
+</em> <pre>end</pre>
+<em> <pre>loop</pre>
+</em> <pre>exit</pre>
+<em> <pre>func</pre>
+</em> <pre>nonlocal</pre></p>
+<p><strong>Tipos de datos:</strong>
+<em> Byte
+</em> Nodo
+<em> Nil
+</em> Funcion</p>
+<h3>Sintaxis</h3>
+<p>La sintaxis de Ward es sencilla, hay condicionales, ciclos, declaraciones y expresiones.</p>
+<p>Ejemplo:</p>
+<div class="highlight"><pre><span></span><span class="err">?</span> <span class="n">declaracion</span> <span class="err">?</span>
+<span class="n">x</span> <span class="p">:</span><span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span><span class="o">=</span> <span class="kc">nil</span><span class="p">;</span>
+
+<span class="err">?</span> <span class="n">condicional</span> <span class="err">?</span>
+<span class="kr">if</span> <span class="n">x</span> <span class="kr">then</span>
+    <span class="err">?</span> <span class="n">expresion</span> <span class="err">?</span>
+    <span class="n">present</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="kr">else</span>
+    <span class="err">?</span> <span class="n">expresion</span> <span class="err">?</span>
+    <span class="n">present</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+<span class="kr">end</span>
+
+<span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
+<span class="err">?</span> <span class="n">ciclo</span> <span class="err">?</span>
+<span class="n">loop</span>
+    <span class="kr">if</span> <span class="err">!</span><span class="n">i</span> <span class="kr">then</span>
+        <span class="n">exit</span><span class="p">;</span>
+    <span class="kr">else</span>
+        <span class="err">?</span> <span class="n">expresion</span> <span class="err">?</span>
+        <span class="n">present</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</pre></div>
+
+<p>Una declaracion o asignacion se hace en la forma <pre>var_name := <em>expresion</em>;</pre>.</p>
+<p>Una condicional se puede escribir de 3 formas:</p>
+<div class="highlight"><pre><span></span><span class="err">?</span> <span class="n">solo</span> <span class="kr">if</span> <span class="err">?</span>
+<span class="kr">if</span> <span class="n">cond</span> <span class="kr">then</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="n">de</span> <span class="n">codigo</span> <span class="err">?</span>
+<span class="kr">end</span>
+
+<span class="err">?</span> <span class="kr">if</span><span class="o">-</span><span class="kr">else</span> <span class="err">?</span>
+<span class="kr">if</span> <span class="n">cond</span> <span class="kr">then</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="kr">if</span> <span class="err">?</span>
+<span class="kr">else</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="kr">else</span> <span class="err">?</span>
+<span class="kr">end</span>
+
+<span class="err">?</span> <span class="kr">if</span><span class="o">-</span><span class="kr">else</span><span class="o">-</span><span class="kr">if</span> <span class="err">?</span>
+<span class="kr">if</span> <span class="n">cond_1</span> <span class="kr">then</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="mi">1</span> <span class="err">?</span>
+<span class="kr">else</span><span class="o">-</span><span class="kr">if</span> <span class="n">cond_2</span> <span class="kr">then</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="mi">2</span> <span class="err">?</span>
+<span class="kr">else</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="kr">else</span> <span class="err">?</span>
+<span class="kr">end</span>
+</pre></div>
+
+<p>la primera solo ejecuta un bloque de codigo si se cumple una condicion, la segunda ejecuta ademas un bloque de codigo si no se cumple la condicion y la tercera solo es <em>syntactic sugar</em> para no encadenar muchos if's dentro de else's (internamente si construye un arbol sintactico asi, por lo que no es mas eficiente que eso).</p>
+<p>Un ciclo simplemente es todo lo que este dentro de un <em>loop</em> y un <em>end</em>:</p>
+<div class="highlight"><pre><span></span><span class="n">loop</span>
+    <span class="err">?</span> <span class="n">bloque</span> <span class="err">?</span>
+<span class="kr">end</span>
+</pre></div>
+
+<p>este ciclo se repite indefinidamente, la unica forma de continuar la ejecucion es con la palabra reservada <em>exit</em>, que es como un break en otros lenguajes de programacion.</p>
+<p>ejemplo:</p>
+<div class="highlight"><pre><span></span><span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">loop</span>
+    <span class="kr">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="kr">then</span>
+        <span class="n">exit</span><span class="p">;</span>
+    <span class="kr">else</span>
+        <span class="n">present</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</pre></div>
+
+<p>asi que basicamente wardscript te obliga a seguir esta sintaxis, pronto talvez agregue una sintaxis mas simple.</p>
+<p>Una expresion es todo lo que en wardscript regrese un valor/dato, por ejemplo una suma, una llamada a una funcion, una declaracion de funcion incluso es una expresion.</p>
+<h3>Tipos de datos</h3>
+<p>Solo hay 4 tipos de datos en WardScript, que son los suficientes creo yo para hacer un lenguaje de programacion de alto nivel y ademas totalmente expresivo (se puede programar lo que sea), el tipo de dato funcion talvez no es necesario pero a mi me gustan los lenguajes que tratan a la funciones como valores de primera clase (como lua, python o javascript).</p>
+<h4>El Byte</h4>
+<p>Es simplemente un entero sin signo menor a 256. Si las computadoras representan todo con bytes entonces tambien puedes programar y representar cualquier dato o informacion solo con bytes, solo hay que saber utilizarlos bien. Puede representar un numero o un caracter.</p>
+<h4>El Nodo</h4>
+<p>Segun este <a href="https://es.wikipedia.org/wiki/Nodo_%28inform%e1tica%29">articulo</a> de wikipedia un nodo es:
+<em>En estructuras de datos dinamicas un nodo es un registro que contiene un dato de interes y al menos un puntero para referenciar (apuntar) a otro nodo. Si la estructura tiene solo un puntero, la unica estructura que se puede construir con el es una lista, si el nodo tiene mas de un puntero ya se pueden construir estructuras mas complejas como arboles o grafos.</em>
+y me parece bastante acertada esta definicion, el nodo a diferencia de los diccionarios no permite nuevas claves ni permite eliminar las que ya hay por lo que es estatico:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span> <span class="p">:</span><span class="o">=</span> <span class="p">{</span>
+    <span class="n">data</span> <span class="p">:</span><span class="o">=</span> <span class="mi">25</span><span class="p">,</span>
+    <span class="nb">next</span> <span class="p">:</span><span class="o">=</span> <span class="kc">nil</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>esto es un nodo en wardscript, <strong>root</strong> es el nodo y <strong>data</strong> y <strong>next</strong> son sus miembros, a estos miembros solo se les puede modificar el valor pero no eliminarlos o crear nuevos.</p>
+<h4>El tipo Nil</h4>
+<p>Este tipo de dato es el mismo que entodos los lenguajes de programacion, nil en lua, None en python o NULL en c. Representa la ausencia de valor y es util para representar el final de una estructura de datos recursiva representada con nodos.</p>
+<h4>La funcion</h4>
+<p>Decidi que la funcion fuera un tipo de dato, esto para hacer mas facil su manejo y poder crear funciones de orden superior, callbacks, closures (cosa tremendamente util en este lenguaje) y otras propiedades mas de la programacion funcional.
+WardScript aun asi no es un lenguaje de programaci&oacute;n puramente funcional ya que sus funciones tienen efectos colaterales y hay mutacion de datos, por lo tanto ser&iacute;a mas correcto llamar a estas funciones subrutinas o procedimientos en lugar de funciones pero ya es costumbre llamar a todo funciones en lenguajes de programaci&oacute;n.</p>
+<p>Hay 2 formas de escribir una funcion:</p>
+<div class="highlight"><pre><span></span><span class="err">?</span> <span class="n">forma</span> <span class="n">regular</span> <span class="err">?</span>
+<span class="n">suma</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">result</span><span class="p">:</span>
+    <span class="n">result</span> <span class="p">:</span><span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+<span class="kr">end</span><span class="p">;</span>
+
+<span class="err">?</span> <span class="n">sintaxis</span> <span class="n">tipo</span> <span class="n">lambda</span> <span class="err">?</span>
+<span class="n">suma</span><span class="s1">' := func { x, y : x + y };</span>
+</pre></div>
+
+<p>las funciones en este lenguaje se escriben de una manera peculiar, lo primero es que no existe la palabra reservada <em>return</em>, ya que realmente no es necesaria, es por esto que existe una <em>variable de retorno</em> en su lugar.</p>
+<p><strong>Como funciona</strong>:
+Una funcion tiene 3 partes fundamentales: argumentos, variable de retorno y bloque de codigo; los argumentos son la cantidad de expresiones que toma una funcion al momento de su llamada y el nombre al que estaran asociadas dentro del Scope de la funcion, la variable de retorno es la variable que debe existir en el scope cuando finalize la ejecucion de una funcion y retornara lo que haya en esa variable y el bloque de codigo es lo que se ejecutara cada que se llame a la funcion.</p>
+<h3>Proposito</h3>
+<p>El proposito de este lenguaje es que sea un lenguaje minimalista y academico siendo facil de implementar, ademas del reto que supone programar algo en el ya que los programadores estan acostumbrados a que en su lenguaje haya tipos de datos y operaciones muy complejas como divison con punto flotante, cadenas de texto y operaciones para estas. En wardscript por ejemplo los string deberan implementarse con nodos y bytes, siendo un byte un caracter de la cadena y el nodo debera contener este byte y una referencia al nodo siguiente (una lista enlazada basicamente), un numero entero grande debera ser implementado tambien con nodos y debera escojerse <em>little endian</em> o <em>big endian</em> para representar estos numeros; si no se sabe lo que es esto: exacto, ese es el proposito de este lenguaje, aprender como funcionan los sistemas digitales y los lenguajes de programacion internamente, como almacenan la informacion (aunque obviamente no lo hacen con nodos pero bueno, un sacrificio para mantener el minimalismo).</p>
+<h3>Gramatica del lenguaje</h3>
+<p>Estas son las reglas gramaticales estilo bison:</p>
+<div class="highlight"><pre><span></span><span class="nl">program</span><span class="p">:</span> <span class="n">block</span><span class="p">;</span>
+
+<span class="nl">block</span><span class="p">:</span>
+     <span class="o">|</span> <span class="n">statement</span> <span class="n">block</span>
+     <span class="p">;</span>
+
+<span class="nl">statement</span><span class="p">:</span> <span class="n">SEMICOLON</span>
+     <span class="o">|</span> <span class="n">expression</span> <span class="n">SEMICOLON</span>
+     <span class="o">|</span> <span class="n">IF</span> <span class="n">expression</span> <span class="n">THEN</span> <span class="n">block</span> <span class="n">END</span>
+     <span class="o">|</span> <span class="n">IF</span> <span class="n">expression</span> <span class="n">THEN</span> <span class="n">block</span> <span class="n">ELSE</span> <span class="n">block</span> <span class="n">END</span>
+     <span class="o">|</span> <span class="n">IF</span> <span class="n">expression</span> <span class="n">THEN</span> <span class="n">block</span> <span class="n">ELSE</span> <span class="sc">'-'</span> <span class="n">statement</span>
+     <span class="o">|</span> <span class="n">FOREVER</span> <span class="n">block</span> <span class="n">END</span>
+     <span class="o">|</span> <span class="n">assignment</span> <span class="n">SEMICOLON</span>
+     <span class="o">|</span> <span class="n">NONLOCAL</span> <span class="n">assignment</span> <span class="n">SEMICOLON</span>
+     <span class="o">|</span> <span class="n">expression</span> <span class="n">DOT</span> <span class="n">NAME</span> <span class="n">EQ</span> <span class="n">expression</span> <span class="n">SEMICOLON</span>
+     <span class="o">|</span> <span class="n">EXIT</span> <span class="n">SEMICOLON</span>
+     <span class="p">;</span>
+
+<span class="nl">assignment</span><span class="p">:</span> <span class="n">NAME</span> <span class="n">EQ</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">NAME</span> <span class="n">EQ</span> <span class="n">expression</span> <span class="n">COMMA</span> <span class="n">assignment</span>
+      <span class="p">;</span>
+
+<span class="nl">expression</span><span class="p">:</span> <span class="n">NUMBER</span>
+      <span class="o">|</span> <span class="n">NAME</span>
+      <span class="o">|</span> <span class="n">NONLOCAL</span> <span class="n">NAME</span>
+      <span class="o">|</span> <span class="n">STRING</span>
+      <span class="o">|</span> <span class="n">LPARENT</span> <span class="n">expression</span> <span class="n">RPARENT</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="n">LPARENT</span> <span class="n">args</span> <span class="n">RPARENT</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="n">DOT</span> <span class="n">NAME</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="n">COLON</span> <span class="n">NAME</span> <span class="n">LPARENT</span> <span class="n">args</span> <span class="n">RPARENT</span>
+      <span class="o">|</span> <span class="n">FUNCTION</span> <span class="n">names</span> <span class="n">COLON</span> <span class="n">NAME</span> <span class="n">COLON</span> <span class="n">block</span> <span class="n">END</span>
+      <span class="o">|</span> <span class="n">FUNCTION</span> <span class="n">LBRACE</span> <span class="n">names</span> <span class="n">COLON</span> <span class="n">expression</span> <span class="n">RBRACE</span>
+      <span class="o">|</span> <span class="n">LBRACE</span> <span class="n">assignment</span> <span class="n">RBRACE</span>
+      <span class="o">|</span> <span class="n">LBRACKET</span> <span class="n">args</span> <span class="n">RBRACKET</span>
+      <span class="p">;</span>
+
+<span class="nl">expression</span><span class="p">:</span> <span class="n">expression</span> <span class="sc">'+'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="sc">'-'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">&lt;&lt;</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">&gt;&gt;</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="sc">'&gt;'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">&gt;=</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="sc">'&lt;'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">&lt;=</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">==</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">/=</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">&amp;&amp;</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="n">expression</span> <span class="err">'</span><span class="o">||</span><span class="err">'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="sc">'!'</span> <span class="n">expression</span>
+      <span class="o">|</span> <span class="sc">'#'</span> <span class="n">expression</span>
+      <span class="p">;</span>
+
+<span class="nl">args</span><span class="p">:</span>
+    <span class="o">|</span> <span class="n">expression</span>
+    <span class="o">|</span> <span class="n">expression</span> <span class="n">COMMA</span> <span class="n">args</span>
+    <span class="p">;</span>
+
+<span class="nl">names</span><span class="p">:</span>
+     <span class="o">|</span> <span class="n">NAME</span>
+     <span class="o">|</span> <span class="n">NAME</span> <span class="n">COMMA</span> <span class="n">names</span>
+     <span class="p">;</span>
+</pre></div>
+
+<h2>Aspectos tecnicos o de implementacion</h2>
+<p>Describire brevemente como programe el interprete para este lenguaje.
+El lenguaje de programacion que utiliza fue C, la razon es que queria eficiencia y ademas me divierte programar en C para ser honesto. Ademas utilize una herramienta llamada Bison que genera analizadores semanticos, asi solo tengo que escribir las reglas gramaticales de una manera sencilla y bison analiza el texto por mi, para el analizador lexico al principio use Flex que es una herramienta que tambien se usa mucho junto con Bison pero deje de usarlo porque era mejor hacer un analizador sintactico hecho a mano y asi lo hice.</p>
+<p>Faltas que tiene el interprete:</p>
+<ul>
+<li>Recolector de Basura</li>
+<li>Backtrace de errores</li>
+<li>Se&ntilde;alamiento de errores (por linea)</li>
+</ul>
+<p>Todo esto lo ire agregando poco a poco ademas de que ya tengo una idea para todo, un sistema de conteo de referencias para el recolector de basura y almacenar informacion de la linea el que esta escrito un statement dentro del nodo del AST y una pila de llamadas para el backtracking.</p>
+<h3>Estructuras de datos utilizadas</h3>
+<p>Para el almacenamiento de las variables implemente un diccionario en C, hice un arbol binario de busqueda autobalanceado AVL, tambien lo uso para el Scope y los Nodos.</p>
+<p>Para almacenar los argumentos de funciones y bloques de codigo uso Stacks.</p>
+<h3>Muestra de codigo C</h3>
+<p>Algunos ejemplos de el codigo escrito en C para el interprete.</p>
+<h4>Abstrac Syntax Tree</h4>
+<p>Un nodo del arbol de sintaxis luce algo asi:</p>
+<div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">func_c</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">type</span><span class="p">;</span> <span class="c1">// AST_FUNC_C</span>
+    <span class="kt">char</span> <span class="n">return_name</span><span class="p">[</span><span class="n">MAX_DICT_KEY</span><span class="p">];</span>
+    <span class="n">stack</span> <span class="o">*</span><span class="n">argnames</span><span class="p">;</span>
+    <span class="n">stack</span> <span class="o">*</span><span class="n">code_block</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>esta estructura almacena las 3 partes que conforman una funcion como ya habia explicado antes: argumentos, variable de retorno y bloque de codigo, usa Stacks para los argumentos y el bloque, (el bloque es un stack de otros nodos sintacticos) y la variable de retorno la almacena simplemente en una cadena de texto de maximo 128 bytes de longitud.
+La funcion que construye este nodo es esta:</p>
+<div class="highlight"><pre><span></span><span class="n">st_st</span> <span class="o">*</span><span class="nf">new_function_construct</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">return_name</span><span class="p">,</span> <span class="n">stack</span> <span class="o">*</span><span class="n">argnames</span><span class="p">,</span> <span class="n">stack</span> <span class="o">*</span><span class="n">code_block</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">st_function_construct</span> <span class="o">*</span><span class="n">fc</span> <span class="o">=</span> <span class="n">astalloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">st_function_construct</span><span class="p">));</span>
+    <span class="n">fc</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">=</span> <span class="n">AST_FUNC_C</span><span class="p">;</span>
+    <span class="n">strncpy</span><span class="p">(</span><span class="n">fc</span><span class="o">-&gt;</span><span class="n">return_name</span><span class="p">,</span> <span class="n">return_name</span><span class="p">,</span> <span class="n">MAX_DICT_KEY</span><span class="p">);</span>
+    <span class="n">fc</span><span class="o">-&gt;</span><span class="n">argnames</span> <span class="o">=</span> <span class="n">argnames</span><span class="p">;</span>
+    <span class="n">fc</span><span class="o">-&gt;</span><span class="n">code_block</span> <span class="o">=</span> <span class="n">code_block</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">st_st</span> <span class="o">*</span><span class="p">)</span> <span class="n">fc</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>esta funcion toma como parametro los 3 elementos anteriores.</p>
+<h4>Evaluator</h4>
+<p>La siguiente funcion es un poco mas complicada, es la funcion que se llama al estar interpretando el programa y por fin ejecutando las instruciones, especificamente esta funcion se encarga de ejecutar las llamadas a funciones, creando el Scope de la funcion, asignando al Scope los argumentos que se le pasaron, asegurando que el numero de argumentos pasados y requeridos por la funcion sean el mismo y ejecutando el bloque de codigo en el Scope de la funcion.</p>
+<p>Primero veamos como es el Nodo Sintactico que almacena esta llamada:</p>
+<div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">call</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">type</span><span class="p">;</span> <span class="c1">// AST_CALL</span>
+    <span class="k">struct</span> <span class="n">st</span> <span class="o">*</span><span class="n">callable</span><span class="p">;</span>
+    <span class="n">stack</span> <span class="o">*</span><span class="n">args</span><span class="p">;</span> <span class="c1">// Stack of statements</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>es bastante sencillo, contiene un arbol sintactico que representa una expresion (que debe retornar una funcion) y un Stack de argumentos (mas expresiones).</p>
+<p>Funcion:</p>
+<div class="highlight"><pre><span></span><span class="cm">/* CALL */</span>
+
+<span class="n">st_st</span> <span class="o">*</span><span class="nf">eva_call</span><span class="p">(</span><span class="n">st_call</span> <span class="o">*</span><span class="n">call</span><span class="p">,</span> <span class="n">Scope</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">B_Function</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">B_Function</span> <span class="o">*</span><span class="p">)</span> <span class="p">((</span><span class="n">st_object</span> <span class="o">*</span><span class="p">)</span> <span class="n">eva_</span><span class="p">(</span><span class="n">call</span><span class="o">-&gt;</span><span class="n">callable</span><span class="p">,</span> <span class="n">S</span><span class="p">))</span><span class="o">-&gt;</span><span class="n">obj</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">!=</span> <span class="n">B_FUNCTION</span><span class="p">)</span>
+        <span class="n">raiseError</span><span class="p">(</span><span class="n">UNCALLABLE_ERROR</span><span class="p">,</span> <span class="s">"not a function expression"</span><span class="p">);</span>
+    <span class="n">stack_node</span> <span class="o">*</span><span class="n">stat</span><span class="p">,</span> <span class="o">*</span><span class="n">argval</span><span class="p">;</span>
+    <span class="n">B_Object</span> <span class="o">*</span><span class="n">return_obj</span><span class="p">;</span>
+    <span class="n">Scope</span> <span class="o">*</span><span class="n">FS</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">ftype</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nl">B_FUNCTYPE</span><span class="p">:</span>
+            <span class="n">FS</span> <span class="o">=</span> <span class="n">newScope</span><span class="p">(</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">);</span> <span class="c1">// The first-level scope is the one that existed</span>
+                        <span class="c1">// in the context where function was created</span>
+            <span class="n">Scope_Concat</span><span class="p">(</span><span class="n">FS</span><span class="p">,</span> <span class="n">S</span><span class="p">);</span> <span class="c1">// For closure functionality</span>
+            <span class="c1">// Setting the arguments on the FScope</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">argnames</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">!=</span> <span class="n">call</span><span class="o">-&gt;</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">)</span>
+                <span class="n">raiseError</span><span class="p">(</span><span class="n">ARGCOUNT_ERROR</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+            <span class="n">argval</span> <span class="o">=</span> <span class="n">call</span><span class="o">-&gt;</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+            <span class="n">stack_node</span> <span class="o">*</span><span class="n">argname</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">argnames</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">argval</span> <span class="o">&amp;&amp;</span> <span class="n">argname</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Scope_Set</span><span class="p">(</span><span class="n">FS</span><span class="p">,</span> <span class="p">((</span><span class="n">st_name</span> <span class="o">*</span><span class="p">)</span> <span class="n">argname</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">Scope_Object</span> <span class="o">*</span><span class="p">)</span> <span class="p">((</span><span class="n">st_object</span> <span class="o">*</span><span class="p">)</span> <span class="n">eva_</span><span class="p">((</span><span class="n">st_st</span> <span class="o">*</span><span class="p">)</span> <span class="n">argval</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="n">S</span><span class="p">))</span><span class="o">-&gt;</span><span class="n">obj</span><span class="p">);</span>
+                <span class="n">argval</span> <span class="o">=</span> <span class="n">argval</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                <span class="n">argname</span> <span class="o">=</span> <span class="n">argname</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="c1">// Evaluating the code of the function</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">code_block</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">stat</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">code_block</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+                <span class="k">while</span> <span class="p">(</span><span class="n">stat</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">eva_</span><span class="p">((</span><span class="n">st_st</span> <span class="o">*</span><span class="p">)</span> <span class="n">stat</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="n">FS</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">==</span> <span class="n">AST_EXIT</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+                    <span class="k">else</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">stat</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">return_obj</span> <span class="o">=</span> <span class="p">(</span><span class="n">B_Object</span> <span class="o">*</span><span class="p">)</span> <span class="n">Scope_Get</span><span class="p">(</span><span class="n">FS</span><span class="p">,</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">return_name</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">return_obj</span><span class="p">)</span>
+                <span class="n">raiseError</span><span class="p">(</span><span class="n">UNDECLARED_ERROR</span><span class="p">,</span> <span class="s">"return name not declared"</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">C_FUNCTYPE</span><span class="p">:</span>
+            <span class="n">FS</span> <span class="o">=</span> <span class="n">newScope</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
+            <span class="n">stack</span> <span class="o">*</span><span class="n">evalargs</span> <span class="o">=</span> <span class="n">newstack</span><span class="p">(),</span> <span class="o">*</span><span class="n">passargs</span> <span class="o">=</span> <span class="n">newstack</span><span class="p">();</span>
+            <span class="n">stack_Data</span> <span class="o">*</span><span class="n">arg</span> <span class="o">=</span> <span class="n">stack_pop</span><span class="p">(</span><span class="n">call</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">);</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">stack_push</span><span class="p">(</span><span class="n">evalargs</span><span class="p">,</span> <span class="n">arg</span><span class="p">);</span>
+                <span class="n">arg</span> <span class="o">=</span> <span class="n">stack_pop</span><span class="p">(</span><span class="n">call</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">arg</span> <span class="o">=</span> <span class="n">stack_pop</span><span class="p">(</span><span class="n">evalargs</span><span class="p">);</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">stack_push</span><span class="p">(</span><span class="n">call</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">,</span> <span class="n">arg</span><span class="p">);</span>
+                <span class="n">stack_push</span><span class="p">(</span><span class="n">passargs</span><span class="p">,</span> 
+                        <span class="p">(</span><span class="n">stack_Data</span> <span class="o">*</span><span class="p">)</span> <span class="p">((</span><span class="n">st_object</span> <span class="o">*</span><span class="p">)</span> <span class="n">eva_</span><span class="p">((</span><span class="n">st_st</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">,</span> <span class="n">S</span><span class="p">))</span><span class="o">-&gt;</span><span class="n">obj</span><span class="p">);</span>
+                <span class="n">arg</span> <span class="o">=</span> <span class="n">stack_pop</span><span class="p">(</span><span class="n">evalargs</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">return_obj</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">cfunc</span><span class="p">(</span><span class="n">passargs</span><span class="p">,</span> <span class="n">FS</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">new_object</span><span class="p">(</span><span class="n">return_obj</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<ol>
+<li>Evalua la expresion y revisa que sea una funcion</li>
+<li>Revisa que clase de funcion es (una escrita en C, es decir que es parte de la interfaz del lenguaje) o una escrita en WardScript.</li>
+<li>Si es escrita en WardScript:<ol>
+<li>Crea un nuevo scope cuyo scope superior sera en el que la funcion fue construida (esto es para crear la funcionalidad 'closure' o encapsulamiento)</li>
+<li>Concatena ese Scope con el Scope en el que la funcion fue llamada para tener acceso las variables de este entorno tambien y las globales.</li>
+<li>Revisa que el numero de argumentos pasados en llamada y el numero de argumentos requeridos son el mismo, de lo contrario lanza un error.</li>
+<li>Evalua las expresiones que fueron pasadas como parametros y las asigna al Scope de la funcion con los nombres de los argumentos en su declaracion.</li>
+<li>Evalua cada statement en el bloque de codigo de la funcion.</li>
+<li>Busca en el Scope el objeto que tiene asociada la variable de retorno y si esta no fue declarada lanza un error.</li>
+<li>Retorna.</li>
+</ol>
+</li>
+<li>Si es escrita en C:<ol>
+<li>Crea un nuevo scope.</li>
+<li>Crea un Stack de argumentos nuevo.</li>
+<li>Evalua todos los argumentos de la llamada y los pasa al Stack nuevo.</li>
+<li>Llama a la funcion en C (el nodo sintactico debe contener un puntero a esa funcion) y le pasa como parametro el Stack de argumentos evaluados y el nuevo Scope.</li>
+<li>Retorna lo que retorno la llamada a la funcion C</li>
+</ol>
+</li>
+</ol>
+<p><strong><em>Nota</em></strong>: el momento/entorno de llamada de una funcion y el momento/entorno donde fue construida no son el mismo.</p>
+<h2>Continuara...</h2>
+<p>Hare otra entrada hablando mas a fondo de la implementacion y haciendo un mini-tutorial de como programar un interprete para WardScript. Esta fue mi primer entrada en un blog por cierto :).</p></section>
+<script src="/res/js/vue.js"></script>
+<!--script src="https://cdn.jsdelivr.net/npm/vue"></script-->
+<script src="/res/js/main.js"></script>
+</body>
+</html>

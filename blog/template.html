@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title> Blog | Luis Albizo </title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1,0">
+	<link rel="stylesheet" href="/res/css/wing.min.css"/>
+	<!--link rel="stylesheet" href="https://unpkg.com/wingcss"/-->
+	<link href="/res/fonts/Montserrat.css" rel="stylesheet">
+	<!--link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"-->
+	<link rel="stylesheet" href="/res/css/green.css"/>
+	<link rel="stylesheet" href="/res/css/vim.css"/>
+</head>
+<body>
+	<header id="nav">
+		<div :class="animationClass" id="button-nav" @click="displayNav">
+			<div id="bar1"></div>
+			<div id="bar2"></div>
+			<div id="bar3"></div>
+		</div>
+		<transition name="slide-fade">
+		<nav class="nav" v-if="display">
+			<a class="nav-item" href="/">Inicio</a>
+			<a class="nav-item" href="/blog">Blog</a>
+			<a class="nav-item" href="/projects">Proyectos</a>
+			<a class="nav-item" href="/contact.html">Contacto</a>
+		</nav>
+		</transition>
+		<h1 class="text-center"></h1>
+		<hr/>
+	</header>
+
+	<section id="entry" class="entry">
+
+	</section>
+
+	<script src="/res/js/vue.js"></script>
+	<!--script src="https://cdn.jsdelivr.net/npm/vue"></script-->
+	<script src="/res/js/main.js"></script>
+</body>
+</html>

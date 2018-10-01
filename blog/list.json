@@ -1,43 +1,25 @@
 {
-  "count": 2,
+  "count": 1,
   "entrys": [
     {
-      "id": 2,
-      "title": "Sitio Web",
-      "tags": [
-        "vue.js",
-        "javascript",
-        "python",
-        "github-pages"
-      ],
-      "date": [
-        2018,
-        9,
-        19,
-        15,
-        2,
-        30
-      ],
-      "entry": "entrys/sitio_web.html"
-    },
-    {
       "id": 1,
-      "title": "Hola Mundo",
+      "title": "Lenguaje WardScript",
       "tags": [
-        "hola",
-        "mundo",
-        "javascript",
-        "vue.js"
+        "wardscript",
+        "c",
+        "bison",
+        "programacion-funcional",
+        "lenguajes-de-programacion"
       ],
       "date": [
         2018,
-        9,
-        18,
-        18,
-        19,
-        22
+        10,
+        1,
+        10,
+        0,
+        32
       ],
-      "entry": "entrys/test.html"
+      "entry": "entrys/9036b25b.html"
     }
   ]
 }

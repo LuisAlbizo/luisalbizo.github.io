@@ -31,7 +31,10 @@ new Vue({
 			event.currentTarget.innerHTML = 'cargando...';
 			event.currentTarget.setAttribute('style', 'display:none;');
 			entryF = blog({id: parseInt(id)}).first().entry;
-			document.getElementById('entry'+id).innerHTML = getHTML(entryF);
+			var ent = document.createElement('html');
+			ent.innerHTML = getHTML(entryF);
+			document.getElementById('entry'+id).innerHTML=
+				ent.getElementsByTagName('section')[0].innerHTML;
 		},
 		loadMore: function() {
 			this.page += 1;
