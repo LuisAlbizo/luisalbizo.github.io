@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="/res/css/wing.min.css"/>
 	<link href="/res/fonts/Montserrat.css" rel="stylesheet">
 	<link rel="stylesheet" href="/res/css/green.css"/>
+	<link rel="stylesheet" href="/res/css/minas.css"/>
 </head>
 <body>
 	<header id="nav">
@@ -24,29 +25,24 @@
 			<a class="nav-item" href="/contact.html">Contacto</a>
 		</nav>
 		</transition>
-		<h1 class="text-center">Portafolio</h1>
-		<hr/>
-		<p class="text-center">
-			Mi nombre es Luis Albizo, tengo 18 a&ntilde;os a dia de hoy y soy programador.
-		</p>
 	</header>
 
 
-	<section>
-		<article class="about">
-			<h2 class="text-center"> Acerca de mi </h2>
-			<p>
-	* Quien soy;
-	* Como empeze a programar?
-	* Que me inspiro a seguir programando?
-	* Cuales son mis intereses?
-	* Cuales son mis talentos o habilidades?
-	* Cuales son mis logros?
-			</p>
-		</article>
+	<section id="app">
+		<h1 class="text-center">Busca minas</h1>
+		<div id="contenedorCanvas">
+			<canvas id="canvas1" width="480" height="400" v-on:click='lclick'>
+				Tu navegador no soporta canvas
+			</canvas>
+		</div>
+		<div id="herramientas">
+			X: {{ x }}
+			Y: {{ y }}
+		</div>
 	</section>
 
 	<script src="/res/js/vue.js"></script>
 	<script src="/res/js/main.js"></script>
+	<script src="/res/js/minas.js"></script>
 </body>
 </html>

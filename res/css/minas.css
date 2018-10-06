@@ -1,0 +1,25 @@
+body {
+	transition: all 0.5s;
+}
+
+canvas {
+	background-color: #aaa;
+	border-radius: 2px;
+}
+
+canvas:hover {
+	cursor: pointer;
+}
+
+#contenedorCanvas{
+	text-align: center;
+}
+
+#herramientas {
+	margin: 10px 60px 10px 60px;
+	padding: 20px;
+	border: 4px solid #feaaaa;
+	border-radius: 3px;
+	background: #bae;
+}
+
