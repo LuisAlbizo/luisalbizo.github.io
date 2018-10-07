@@ -41,6 +41,15 @@ form {
 	margin-bottom: 100px;
 }
 
+.about h4 {
+	text-align: center;
+}
+
+.about p {
+	max-width: 70%;
+	margin: auto;
+}
+
 .button {
 	color: #466;
 	background-color: #ddd;
@@ -276,6 +285,11 @@ section.blog {
 		width: 100%;
 		margin:0;
 		padding:0;
+	}
+
+	.about p {
+		width: 100%;
+		max-width: 100%;
 	}
 
 	.card {
