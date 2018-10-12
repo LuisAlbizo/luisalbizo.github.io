@@ -10,7 +10,9 @@ function clearEntrys() {
 };
 
 const Limit = 5;
-var blog = TAFFY(getJSON('list.json', false).entrys);
+var db = getJSON('list.json', false);
+var blog = TAFFY(db.entrys);
+var nentrys = db.count;
 
 new Vue({
 	el:'#blog',
